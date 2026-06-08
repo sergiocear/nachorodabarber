@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 export default function Hero() {
   const [mouseX, setMouseX] = useState(0)
   const [mouseY, setMouseY] = useState(0)
+  const [scrollY, setScrollY] = useState(0)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -11,24 +12,37 @@ export default function Hero() {
       setMouseX((e.clientX / window.innerWidth - 0.5) * 20)
       setMouseY((e.clientY / window.innerHeight - 0.5) * 20)
     }
+    const onScroll = () => setScrollY(window.scrollY)
     window.addEventListener('mousemove', move)
-    return () => window.removeEventListener('mousemove', move)
+    window.addEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('mousemove', move)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
     <section id="hero" ref={ref} style={{
       minHeight: '100vh', display: 'flex', flexDirection: 'column',
       justifyContent: 'center', padding: 'clamp(80px, 12vw, 120px) clamp(16px, 4vw, 32px) 0', maxWidth: '100%',
-      background: `linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(26,10,5,0.65) 100%), url('/images/hero.jpg') center/cover no-repeat`,
+      background: 'var(--black)',
       position: 'relative', overflow: 'hidden'
     }}>
 
-      {/* Líneas decorativas animadas */}
-      <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, ease: 'easeOut' }}
-        style={{ position: 'absolute', top: 0, left: '20%', width: '1px', height: '100%', background: 'linear-gradient(to bottom, transparent, rgba(230,60,30,0.15), transparent)', transformOrigin: 'top' }} />
-      <motion.div initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} transition={{ duration: 1.5, delay: 0.3, ease: 'easeOut' }}
-        style={{ position: 'absolute', top: 0, right: '25%', width: '1px', height: '100%', background: 'linear-gradient(to bottom, transparent, rgba(230,60,30,0.1), transparent)', transformOrigin: 'top' }} />
-
+      {/* Logo SVG real de fondo con parallax */}
+      <div style={{
+        position: 'absolute',
+        top: '50%', left: '50%',
+        transform: `translate(-50%, -50%) translateY(${scrollY * 0.15}px)`,
+        width: 'clamp(300px, 65vw, 860px)',
+        opacity: 0.12,
+        pointerEvents: 'none', userSelect: 'none',
+        filter: 'invert(1)',
+        mixBlendMode: 'screen',
+      }}>
+        <img src="/images/logo.svg" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+      </div>
+      
       {/* Círculo de luz */}
       <motion.div
         animate={{ x: mouseX, y: mouseY }}
@@ -43,8 +57,6 @@ export default function Hero() {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
         style={{ maxWidth: 700, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
 
-        {/* Logo */}
-     
         <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
           style={{ color: 'var(--accent)', letterSpacing: '0.4em', textTransform: 'uppercase', fontSize: '0.75rem', marginBottom: 20 }}>
           Barbería · Infiesto, Asturias
