@@ -42,7 +42,7 @@ export default function Hero() {
       }}>
         <img src="/images/logo.svg" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
       </div>
-      
+
       {/* Círculo de luz */}
       <motion.div
         animate={{ x: mouseX, y: mouseY }}
@@ -64,19 +64,19 @@ export default function Hero() {
 
         <div style={{ overflow: 'hidden', marginBottom: 8 }}>
           <motion.h1 initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(4rem, 12vw, 9rem)', lineHeight: 0.9 }}>
+            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 10vw, 7.5rem)', lineHeight: 0.95 }}>
             NACHO
           </motion.h1>
         </div>
         <div style={{ overflow: 'hidden', marginBottom: 8 }}>
           <motion.h1 initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ delay: 0.55, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(4rem, 12vw, 9rem)', lineHeight: 0.9, color: 'var(--accent)' }}>
+            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 10vw, 7.5rem)', lineHeight: 0.95, color: 'var(--accent)' }}>
             RODA
           </motion.h1>
         </div>
         <div style={{ overflow: 'hidden', marginBottom: 32 }}>
           <motion.h1 initial={{ y: '100%' }} animate={{ y: 0 }} transition={{ delay: 0.7, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(4rem, 12vw, 9rem)', lineHeight: 0.9 }}>
+            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(3rem, 10vw, 7.5rem)', lineHeight: 0.95 }}>
             BARBER
           </motion.h1>
         </div>
