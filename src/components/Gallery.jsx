@@ -26,15 +26,22 @@ export default function Gallery() {
       </motion.div>
 
       {/* Carrusel */}
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}>
+      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
+        onTouchStart={e => e.currentTarget._touchX = e.touches[0].clientX}
+        onTouchEnd={e => {
+          const diff = e.currentTarget._touchX - e.changedTouches[0].clientX
+          if (diff > 50) next()
+          if (diff < -50) prev()
+        }}>
 
         {/* Fotos */}
         <div style={{ display: 'flex', transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: `translateX(-${current * 33.333}%)` }}>
           {photos.map((src, i) => (
-            <div key={i} style={{ minWidth: '33.333%', height: 280, flexShrink: 0, padding: '0 6px' }}>
+            <a key={i} href="https://www.instagram.com/nachorodabarber/" target="_blank" rel="noopener noreferrer"
+              style={{ minWidth: '33.333%', height: 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
               <img src={src} alt={`Trabajo ${i + 1}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
-            </div>
+            </a>
           ))}
         </div>
 
