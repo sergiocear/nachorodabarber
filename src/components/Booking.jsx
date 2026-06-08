@@ -19,7 +19,7 @@ export default function Booking() {
         <div style={{ position: 'absolute', top: -1, left: '10%', right: '10%', height: '2px', background: 'linear-gradient(to right, transparent, var(--accent), transparent)' }} />
         <div style={{ position: 'absolute', bottom: -1, left: '10%', right: '10%', height: '2px', background: 'linear-gradient(to right, transparent, var(--accent), transparent)' }} />
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <p style={{ color: 'var(--accent)', letterSpacing: '0.4em', fontSize: '0.75rem', textTransform: 'uppercase', marginBottom: 16 }}>Sin esperas</p>
           <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', marginBottom: 16 }}>RESERVA TU CITA</h2>
           <p style={{ color: 'var(--text-muted)', marginBottom: 48, maxWidth: 460, margin: '0 auto 48px', lineHeight: 1.8 }}>
