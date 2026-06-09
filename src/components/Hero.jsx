@@ -29,19 +29,27 @@ export default function Hero() {
       position: 'relative', overflow: 'hidden'
     }}>
 
-      {/* Logo SVG real de fondo con parallax */}
+      {/* Vídeo de fondo repetido horizontalmente */}
       <div style={{
-        position: 'absolute',
-        top: '50%', left: '50%',
-        transform: `translate(-50%, -50%) translateY(${scrollY * 0.15}px)`,
-        width: 'clamp(300px, 65vw, 860px)',
-        opacity: 0.12,
-        pointerEvents: 'none', userSelect: 'none',
-        filter: 'invert(1)',
-        mixBlendMode: 'screen',
+        position: 'absolute', inset: 0, display: 'flex',
+        overflow: 'hidden', zIndex: 0
       }}>
-        <img src="/images/logo.svg" alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        {[0, 1, 2, 3].map(i => (
+          <video key={i} autoPlay muted loop playsInline
+            style={{
+              height: '100%', width: 'auto', flexShrink: 0,
+              objectFit: 'cover', opacity: 0.8,
+              filter: 'brightness(0.7)'
+            }}>
+            <source src="/videos/hero.mp4" type="video/mp4" />
+          </video>
+        ))}
       </div>
+
+      {/* Overlay oscuro sobre el vídeo */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(26,10,5,0.25) 100%)'      }} />
 
       {/* Círculo de luz */}
       <motion.div
@@ -51,11 +59,12 @@ export default function Hero() {
           position: 'absolute', width: 600, height: 600,
           background: 'radial-gradient(circle, rgba(230,60,30,0.08) 0%, transparent 70%)',
           borderRadius: '50%', left: '50%', top: '50%',
-          transform: 'translate(-50%, -50%)', pointerEvents: 'none'
+          transform: 'translate(-50%, -50%)', pointerEvents: 'none',
+          zIndex: 2
         }} />
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
-        style={{ maxWidth: 700, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+        style={{ maxWidth: 700, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', position: 'relative', zIndex: 3 }}>
 
         <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
           style={{ color: 'var(--accent)', letterSpacing: '0.4em', textTransform: 'uppercase', fontSize: '0.75rem', marginBottom: 20 }}>
@@ -86,7 +95,7 @@ export default function Hero() {
           Cortes con carácter. Estilo propio.<br />Tu cita, cuando quieras.
         </motion.p>
 
-        <motion.a href="https://squareup.com/appointments/REEMPLAZA" target="_blank" rel="noopener noreferrer"
+        <motion.a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.6 }}
           whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
           style={{
@@ -101,7 +110,7 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+        style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, zIndex: 3 }}>
         <span style={{ color: 'var(--text-muted)', fontSize: '0.7rem', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Scroll</span>
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}
           style={{ width: 1, height: 40, background: 'linear-gradient(to bottom, var(--accent), transparent)' }} />

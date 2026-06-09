@@ -18,7 +18,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Bloquear scroll cuando el menú está abierto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -35,13 +34,10 @@ export default function Navbar() {
         borderBottom: scrolled ? '1px solid rgba(230,60,30,0.2)' : '1px solid transparent',
         transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
-        {/* Logo */}
         <img src="/images/logo.png" alt="Nacho Roda Barber"
           style={{ height: 40, display: 'block', filter: 'drop-shadow(0 0 10px rgba(230,60,30,0.3))' }} />
 
-        {/* Links escritorio */}
-        <div style={{ display: 'flex', gap: '28px', alignItems: 'center' }}
-          className="nav-desktop">
+        <div style={{ display: 'flex', gap: '28px', alignItems: 'center' }} className="nav-desktop">
           {links.map(l => (
             <Link key={l.to} to={l.to} smooth duration={700}
               style={{ cursor: 'none', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)', transition: 'color 0.3s' }}
@@ -50,7 +46,7 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
-          <a href="https://squareup.com/appointments/REEMPLAZA" target="_blank" rel="noopener noreferrer"
+          <a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
             style={{
               background: 'var(--accent)', color: 'var(--white)',
               padding: '8px 20px', fontFamily: 'var(--font-display)',
@@ -61,32 +57,14 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Botón hamburguesa móvil */}
-        <button onClick={() => setMenuOpen(o => !o)}
-          className="nav-hamburger"
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            display: 'none', flexDirection: 'column', gap: 5, padding: 4
-          }}>
-          <span style={{
-            display: 'block', width: 24, height: 2, background: 'var(--white)',
-            transition: 'all 0.3s',
-            transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
-          }} />
-          <span style={{
-            display: 'block', width: 24, height: 2, background: 'var(--white)',
-            transition: 'all 0.3s',
-            opacity: menuOpen ? 0 : 1
-          }} />
-          <span style={{
-            display: 'block', width: 24, height: 2, background: 'var(--white)',
-            transition: 'all 0.3s',
-            transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none'
-          }} />
+        <button onClick={() => setMenuOpen(o => !o)} className="nav-hamburger"
+          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', flexDirection: 'column', gap: 5, padding: 4 }}>
+          <span style={{ display: 'block', width: 24, height: 2, background: 'var(--white)', transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
+          <span style={{ display: 'block', width: 24, height: 2, background: 'var(--white)', transition: 'all 0.3s', opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ display: 'block', width: 24, height: 2, background: 'var(--white)', transition: 'all 0.3s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
         </button>
       </nav>
 
-      {/* Menú móvil overlay */}
       <div style={{
         position: 'fixed', inset: 0, zIndex: 99,
         background: 'rgba(10,10,10,0.98)',
@@ -108,7 +86,7 @@ export default function Navbar() {
             {l.label}
           </Link>
         ))}
-        <a href="https://squareup.com/appointments/REEMPLAZA" target="_blank" rel="noopener noreferrer"
+        <a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
           onClick={() => setMenuOpen(false)}
           style={{
             background: 'var(--accent)', color: 'var(--white)',
@@ -122,7 +100,6 @@ export default function Navbar() {
         </a>
       </div>
 
-      {/* Estilos responsive para navbar */}
       <style>{`
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }

@@ -10,6 +10,11 @@ export default function Location() {
           <div>
             <p style={{ fontWeight: 500, marginBottom: 4 }}>Dirección</p>
             <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>C/ Covadonga, 10<br />33530 Infiesto, Asturias</p>
+            <a href="tel:+34985711894" style={{ color: 'var(--accent)', fontSize: '0.88rem', fontWeight: 500, marginTop: 8, display: 'inline-block', transition: 'opacity 0.2s' }}
+            onMouseOver={e => e.currentTarget.style.opacity = '0.7'}
+            onMouseOut={e => e.currentTarget.style.opacity = '1'}>
+            985 711 894
+          </a>
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
@@ -19,7 +24,7 @@ export default function Location() {
             {[
               ['Lunes – Jue', '9:30–13:30 / 15:30–19:30'],
               ['Viernes',     '9:30–19:30'],
-              ['Sábado',      '9:00–14:00'],
+              ['Sábado',      'Cerrado'],
               ['Domingo',     'Cerrado'],
             ].map(([day, hours]) => (
               <div key={day} style={{ display: 'flex', justifyContent: 'space-between', gap: 32, marginBottom: 6 }}>

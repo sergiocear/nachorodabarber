@@ -11,7 +11,6 @@ export default function Booking() {
           border: '1px solid rgba(230,60,30,0.2)',
         }}>
 
-        {/* Fondo decorativo */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: 'radial-gradient(ellipse at center, rgba(230,60,30,0.08) 0%, transparent 70%)'
@@ -25,7 +24,7 @@ export default function Booking() {
           <p style={{ color: 'var(--text-muted)', marginBottom: 48, maxWidth: 460, margin: '0 auto 48px', lineHeight: 1.8 }}>
             Elige el día y la hora que mejor te venga.<br />Rápido, fácil y sin llamadas.
           </p>
-          <motion.a href="https://squareup.com/appointments/REEMPLAZA" target="_blank" rel="noopener noreferrer"
+          <motion.a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
             whileHover={{ scale: 1.04, boxShadow: '0 12px 50px rgba(230,60,30,0.5)' }}
             whileTap={{ scale: 0.97 }}
             style={{
