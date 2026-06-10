@@ -13,20 +13,25 @@ const photos = [
 export default function Gallery() {
   const [current, setCurrent] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const containerRef = useRef(null)
+  const touchStartX = useRef(null)
 
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= 768)
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    const update = () => {
+      setIsMobile(window.innerWidth <= 768)
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
   }, [])
 
-  const itemWidth = isMobile ? 100 : 33.333
   const maxIndex = isMobile ? photos.length - 1 : photos.length - 3
-
   const prev = useCallback(() => setCurrent(i => Math.max(0, i - 1)), [])
   const next = useCallback(() => setCurrent(i => Math.min(maxIndex, i + 1)), [maxIndex])
-
-  const touchStartX = useRef(null)
 
   return (
     <section id="gallery">
@@ -38,7 +43,7 @@ export default function Gallery() {
         </div>
       </motion.div>
 
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
+      <div ref={containerRef} style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
         onTouchStart={e => { touchStartX.current = e.touches[0].clientX }}
         onTouchEnd={e => {
           if (touchStartX.current === null) return
@@ -48,14 +53,22 @@ export default function Gallery() {
           touchStartX.current = null
         }}>
 
+        {/* Usamos px en vez de % para el desplazamiento */}
         <div style={{
           display: 'flex',
           transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-          transform: `translateX(-${current * itemWidth}%)`
+          transform: isMobile
+            ? `translateX(-${current * containerWidth}px)`
+            : `translateX(-${current * (containerWidth / 3)}px)`
         }}>
           {photos.map((src, i) => (
             <a key={i} href="https://www.instagram.com/nachorodabarber/" target="_blank" rel="noopener noreferrer"
-              style={{ minWidth: `${itemWidth}%`, height: isMobile ? 480 : 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
+              style={{
+                width: isMobile ? `${containerWidth}px` : `${containerWidth / 3}px`,
+                minWidth: isMobile ? `${containerWidth}px` : `${containerWidth / 3}px`,
+                height: isMobile ? 480 : 280,
+                flexShrink: 0, padding: '0 6px', display: 'block'
+              }}>
               <img src={src} alt={`Corte de pelo barbería Nacho Roda Barber Infiesto Asturias ${i + 1}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             </a>
@@ -70,9 +83,7 @@ export default function Gallery() {
             fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             backdropFilter: 'blur(8px)', transition: 'all 0.3s',
             opacity: current === 0 ? 0.3 : 1
-          }}>
-          ‹
-        </button>
+          }}>‹</button>
 
         <button onClick={next} disabled={current === maxIndex}
           style={{
@@ -82,9 +93,7 @@ export default function Gallery() {
             fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             backdropFilter: 'blur(8px)', transition: 'all 0.3s',
             opacity: current === maxIndex ? 0.3 : 1
-          }}>
-          ›
-        </button>
+          }}>›</button>
 
         <div style={{
           position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)',
