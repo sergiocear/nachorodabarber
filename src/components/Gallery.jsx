@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 const photos = [
   '/images/gallery-1.jpg',
@@ -13,7 +13,6 @@ const photos = [
 export default function Gallery() {
   const [current, setCurrent] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
-  const containerRef = useRef(null)
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 768)
@@ -22,10 +21,12 @@ export default function Gallery() {
   }, [])
 
   const itemWidth = isMobile ? 100 : 33.333
-  const step = isMobile ? 1 : 1
+  const maxIndex = isMobile ? photos.length - 1 : photos.length - 3
 
-  const prev = () => setCurrent(i => (i - step + photos.length) % photos.length)
-  const next = () => setCurrent(i => (i + step) % photos.length)
+  const prev = useCallback(() => setCurrent(i => Math.max(0, i - 1)), [])
+  const next = useCallback(() => setCurrent(i => Math.min(maxIndex, i + 1)), [maxIndex])
+
+  const touchStartX = useRef(null)
 
   return (
     <section id="gallery">
@@ -37,16 +38,16 @@ export default function Gallery() {
         </div>
       </motion.div>
 
-      {/* Carrusel */}
-      <div ref={containerRef} style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
-        onTouchStart={e => e.currentTarget._touchX = e.touches[0].clientX}
+      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
+        onTouchStart={e => { touchStartX.current = e.touches[0].clientX }}
         onTouchEnd={e => {
-          const diff = e.currentTarget._touchX - e.changedTouches[0].clientX
-          if (diff > 50) next()
-          if (diff < -50) prev()
+          if (touchStartX.current === null) return
+          const diff = touchStartX.current - e.changedTouches[0].clientX
+          if (diff > 40) next()
+          else if (diff < -40) prev()
+          touchStartX.current = null
         }}>
 
-        {/* Fotos */}
         <div style={{
           display: 'flex',
           transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -61,39 +62,36 @@ export default function Gallery() {
           ))}
         </div>
 
-        {/* Botón anterior */}
-        <button onClick={prev} style={{
-          position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
-          background: 'rgba(10,10,10,0.7)', border: '1px solid rgba(255,255,255,0.15)',
-          color: 'var(--white)', width: 48, height: 48, borderRadius: '50%',
-          fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backdropFilter: 'blur(8px)', transition: 'all 0.3s'
-        }}
-          onMouseOver={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
-          onMouseOut={e => { e.currentTarget.style.background = 'rgba(10,10,10,0.7)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)' }}>
+        <button onClick={prev} disabled={current === 0}
+          style={{
+            position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+            background: 'rgba(10,10,10,0.7)', border: '1px solid rgba(255,255,255,0.15)',
+            color: 'var(--white)', width: 48, height: 48, borderRadius: '50%',
+            fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(8px)', transition: 'all 0.3s',
+            opacity: current === 0 ? 0.3 : 1
+          }}>
           ‹
         </button>
 
-        {/* Botón siguiente */}
-        <button onClick={next} style={{
-          position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
-          background: 'rgba(10,10,10,0.7)', border: '1px solid rgba(255,255,255,0.15)',
-          color: 'var(--white)', width: 48, height: 48, borderRadius: '50%',
-          fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backdropFilter: 'blur(8px)', transition: 'all 0.3s'
-        }}
-          onMouseOver={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
-          onMouseOut={e => { e.currentTarget.style.background = 'rgba(10,10,10,0.7)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)' }}>
+        <button onClick={next} disabled={current === maxIndex}
+          style={{
+            position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+            background: 'rgba(10,10,10,0.7)', border: '1px solid rgba(255,255,255,0.15)',
+            color: 'var(--white)', width: 48, height: 48, borderRadius: '50%',
+            fontSize: '1.2rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(8px)', transition: 'all 0.3s',
+            opacity: current === maxIndex ? 0.3 : 1
+          }}>
           ›
         </button>
 
-        {/* Puntos indicadores */}
         <div style={{
           position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)',
           display: 'flex', gap: 8
         }}>
           {photos.map((_, i) => (
-            <button key={i} onClick={() => setCurrent(i)} style={{
+            <button key={i} onClick={() => setCurrent(Math.min(i, maxIndex))} style={{
               width: i === current ? 24 : 8, height: 6,
               borderRadius: 4, border: 'none', cursor: 'pointer',
               background: i === current ? 'var(--accent)' : 'rgba(255,255,255,0.3)',
@@ -103,7 +101,6 @@ export default function Gallery() {
         </div>
       </div>
 
-      {/* Franja Instagram */}
       <motion.a href="https://www.instagram.com/nachorodabarber/" target="_blank" rel="noopener noreferrer"
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
         whileHover={{ scale: 1.02 }}
