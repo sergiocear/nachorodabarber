@@ -54,7 +54,7 @@ export default function Gallery() {
         }}>
           {photos.map((src, i) => (
             <a key={i} href="https://www.instagram.com/nachorodabarber/" target="_blank" rel="noopener noreferrer"
-              style={{ minWidth: `${itemWidth}%`, height: 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
+              style={{ minWidth: `${itemWidth}%`, height: isMobile ? 480 : 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
               <img src={src} alt={`Corte de pelo barbería Nacho Roda Barber Infiesto Asturias ${i + 1}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             </a>
