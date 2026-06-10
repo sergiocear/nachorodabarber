@@ -48,7 +48,7 @@ export default function Navbar() {
           ))}
           <a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
             style={{
-              background: 'var(--accent)', color: 'var(--white)',
+              background: 'var(--accent)', color: 'var(--black)',
               padding: '8px 20px', fontFamily: 'var(--font-display)',
               fontSize: '0.95rem', letterSpacing: '0.1em', borderRadius: 2,
               transition: 'all 0.3s', boxShadow: '0 0 20px rgba(230,60,30,0.2)'
@@ -89,7 +89,7 @@ export default function Navbar() {
         <a href="https://book.squareup.com/appointments/594ndfk5pp0tqz/location/LZ7XDYABNAW6C/services" target="_blank" rel="noopener noreferrer"
           onClick={() => setMenuOpen(false)}
           style={{
-            background: 'var(--accent)', color: 'var(--white)',
+            background: 'var(--accent)', color: 'var(--black)',
             padding: '14px 48px', fontFamily: 'var(--font-display)',
             fontSize: '1.3rem', letterSpacing: '0.1em', borderRadius: 2,
             transform: menuOpen ? 'translateY(0)' : 'translateY(20px)',

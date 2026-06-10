@@ -29,12 +29,12 @@ body {
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: transform 0.1s, opacity 0.2s;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e63c1e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='9' cy='8' rx='5' ry='6.5' transform='rotate(-35 9 8)' /%3E%3Cellipse cx='9' cy='32' rx='5' ry='6.5' transform='rotate(35 9 32)' /%3E%3Cpath d='M13 10 L36 22' /%3E%3Cpath d='M13 30 L36 22' /%3E%3Ccircle cx='20' cy='22' r='2' fill='%23e63c1e' stroke='none' /%3E%3Cellipse cx='9' cy='8' rx='2.5' ry='3.5' transform='rotate(-35 9 8)' stroke-width='1' /%3E%3Cellipse cx='9' cy='32' rx='2.5' ry='3.5' transform='rotate(35 9 32)' stroke-width='1' /%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23e8ff00' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='9' cy='8' rx='5' ry='6.5' transform='rotate(-35 9 8)' /%3E%3Cellipse cx='9' cy='32' rx='5' ry='6.5' transform='rotate(35 9 32)' /%3E%3Cpath d='M13 10 L36 22' /%3E%3Cpath d='M13 30 L36 22' /%3E%3Ccircle cx='20' cy='22' r='2' fill='%23e8ff00' stroke='none' /%3E%3Cellipse cx='9' cy='8' rx='2.5' ry='3.5' transform='rotate(-35 9 8)' stroke-width='1' /%3E%3Cellipse cx='9' cy='32' rx='2.5' ry='3.5' transform='rotate(35 9 32)' stroke-width='1' /%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
 }
 .cursor-ring {
   position: fixed;
   width: 56px; height: 56px;
-  border: 1px solid rgba(230,60,30,0.3);
+  border: 1px solid rgba(232,255,0,0.3);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9998;
@@ -48,7 +48,7 @@ body:has(button:hover) .cursor {
 body:has(a:hover) .cursor-ring,
 body:has(button:hover) .cursor-ring {
   width: 68px; height: 68px;
-  border-color: rgba(230,60,30,0.6);
+  border-color: rgba(232,255,0,0.6);
 }
 
 h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.05em; }

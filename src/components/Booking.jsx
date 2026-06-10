@@ -28,7 +28,7 @@ export default function Booking() {
             whileHover={{ scale: 1.04, boxShadow: '0 12px 50px rgba(230,60,30,0.5)' }}
             whileTap={{ scale: 0.97 }}
             style={{
-              display: 'inline-block', border: '2px solid var(--accent)', color: 'var(--white)',
+              display: 'inline-block', border: '2px solid var(--accent)', color: 'var(--black)',
               background: 'var(--accent)', padding: '16px 56px',
               fontFamily: 'var(--font-display)', fontSize: '1.4rem',
               letterSpacing: '0.1em', borderRadius: 2,

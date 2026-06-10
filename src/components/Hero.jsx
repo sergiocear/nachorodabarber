@@ -99,7 +99,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.6 }}
           whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}
           style={{
-            display: 'inline-block', background: 'var(--accent)', color: 'var(--white)',
+            display: 'inline-block', background: 'var(--accent)', color: 'var(--black)',
             padding: '16px 48px', fontFamily: 'var(--font-display)', fontSize: '1.3rem',
             letterSpacing: '0.1em', borderRadius: 2,
             boxShadow: '0 8px 40px rgba(230,60,30,0.35)'
