@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const photos = [
   '/images/gallery-1.jpg',
@@ -12,9 +12,20 @@ const photos = [
 
 export default function Gallery() {
   const [current, setCurrent] = useState(0)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const containerRef = useRef(null)
 
-  const prev = () => setCurrent(i => (i - 1 + photos.length) % photos.length)
-  const next = () => setCurrent(i => (i + 1) % photos.length)
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= 768)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const itemWidth = isMobile ? 100 : 33.333
+  const step = isMobile ? 1 : 1
+
+  const prev = () => setCurrent(i => (i - step + photos.length) % photos.length)
+  const next = () => setCurrent(i => (i + step) % photos.length)
 
   return (
     <section id="gallery">
@@ -27,7 +38,7 @@ export default function Gallery() {
       </motion.div>
 
       {/* Carrusel */}
-      <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
+      <div ref={containerRef} style={{ position: 'relative', overflow: 'hidden', borderRadius: 6 }}
         onTouchStart={e => e.currentTarget._touchX = e.touches[0].clientX}
         onTouchEnd={e => {
           const diff = e.currentTarget._touchX - e.changedTouches[0].clientX
@@ -36,10 +47,14 @@ export default function Gallery() {
         }}>
 
         {/* Fotos */}
-        <div style={{ display: 'flex', transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)', transform: `translateX(-${current * (window.innerWidth <= 768 ? 100 : 33.333)}%)` }}>
+        <div style={{
+          display: 'flex',
+          transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+          transform: `translateX(-${current * itemWidth}%)`
+        }}>
           {photos.map((src, i) => (
             <a key={i} href="https://www.instagram.com/nachorodabarber/" target="_blank" rel="noopener noreferrer"
-              style={{ minWidth: window.innerWidth <= 768 ? '100%' : '33.333%', height: 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
+              style={{ minWidth: `${itemWidth}%`, height: 280, flexShrink: 0, padding: '0 6px', display: 'block' }}>
               <img src={src} alt={`Corte de pelo barbería Nacho Roda Barber Infiesto Asturias ${i + 1}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 4 }} />
             </a>
@@ -113,7 +128,6 @@ export default function Gallery() {
           @nachorodabarber →
         </span>
       </motion.a>
-
     </section>
   )
 }
